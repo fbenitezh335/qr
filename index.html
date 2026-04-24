@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial;
+}
+
+.slider {
+    display: flex;
+    width: 400%;
+    height: 100vh;
+    transition: transform 0.5s ease;
+}
+
+.slide {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Texto */
+.title {
+    position: absolute;
+    bottom: 100px;
+    left: 20px;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Botón */
+.btn {
+    position: absolute;
+    bottom: 40px;
+    left: 20px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+/* Flechas */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    color: white;
+    background: rgba(0,0,0,0.5);
+    padding: 10px;
+    cursor: pointer;
+}
+
+.left { left: 10px; }
+.right { right: 10px; }
+
+/* Indicador inicial */
+.hint {
+    position: absolute;
+    bottom: 120px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    animation: fade 2s infinite;
+}
+
+@keyframes fade {
+    0% {opacity: 0;}
+    50% {opacity: 1;}
+    100% {opacity: 0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="slider" id="slider">
+
+    <!-- SLIDE 1 -->
+    <div class="slide">
+        <img src="inicio.jpg">
+        <div class="hint">← Desliza →</div>
+    </div>
+
+    <!-- MECÁNICA -->
+    <div class="slide">
+        <img src="mecanica.jpg">
+        <div class="title">Mecánica Naval</div>
+        <a href="#" class="btn">Ver trabajos</a>
+    </div>
+
+    <!-- SOLDADURA -->
+    <div class="slide">
+        <img src="soldadura.jpg">
+        <div class="title">Soldadura y Calderería</div>
+        <a href="#" class="btn">Ver trabajos</a>
+    </div>
+
+    <!-- HIDRÁULICA -->
+    <div class="slide">
+        <img src="hidraulica.jpg">
+        <div class="title">Sistemas Hidráulicos</div>
+        <a href="#" class="btn">Ver trabajos</a>
+    </div>
+
+</div>
+
+<div class="arrow left" onclick="move(-1)">❮</div>
+<div class="arrow right" onclick="move(1)">❯</div>
+
+<script>
+let index = 0;
+
+function move(direction) {
+    const slider = document.getElementById("slider");
+    index += direction;
+
+    if(index < 0) index = 0;
+    if(index > 3) index = 3;
+
+    slider.style.transform = "translateX(-" + (index * 100) + "%)";
+}
+</script>
+
+</body>
+</html>
