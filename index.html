@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Francisco Sánchez - Servicios Navales</title>
+<title>Servicios Navales</title>
 
 <style>
 body {
@@ -14,8 +14,8 @@ body {
 }
 
 .container {
-    height: 100vh;
     width: 100%;
+    height: 100vh;
     position: relative;
 }
 
@@ -49,18 +49,18 @@ body {
 /* FLECHAS */
 .arrow {
     position: fixed;
-    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 30px;
     color: white;
     background: rgba(0,0,0,0.5);
     padding: 10px;
     cursor: pointer;
     z-index: 10;
-    user-select: none;
 }
 
-.up { top: 40%; }
-.down { top: 55%; }
+.left { left: 10px; }
+.right { right: 10px; }
 </style>
 </head>
 
@@ -68,9 +68,7 @@ body {
 
 <div class="container">
 
-    <div class="section">
-        <img src="inicio.jpg">
-    </div>
+    <div class="section"><img src="inicio.jpg"></div>
 
     <div class="section">
         <img src="mecanica.jpg">
@@ -94,58 +92,59 @@ body {
 
 </div>
 
-<div class="arrow up" onclick="scrollUp()">▲</div>
-<div class="arrow down" onclick="scrollDown()">▼</div>
+<div class="arrow left" onclick="prev()">❮</div>
+<div class="arrow right" onclick="next()">❯</div>
 
 <script>
 const sections = document.querySelectorAll(".section");
 let index = 0;
-let isScrolling = false;
+let isMoving = false;
 
 function updateView() {
     sections.forEach((sec, i) => {
-        sec.style.transform = `translateY(${(i - index) * 100}%)`;
+        sec.style.transform = `translateX(${(i - index) * 100}%)`;
     });
 }
 
 updateView();
 
-// SCROLL CON RATÓN
-window.addEventListener("wheel", (e) => {
-    if (isScrolling) return;
+/* BOTONES */
+function next() {
+    if (isMoving) return;
+    isMoving = true;
 
-    isScrolling = true;
-
-    if (e.deltaY > 0) index++;
-    else index--;
-
-    if (index < 0) index = 0;
+    index++;
     if (index > sections.length - 1) index = sections.length - 1;
 
     updateView();
+    setTimeout(() => isMoving = false, 600);
+}
 
-    setTimeout(() => isScrolling = false, 700);
-});
+function prev() {
+    if (isMoving) return;
+    isMoving = true;
 
-// TOUCH (MÓVIL)
-let startY = 0;
+    index--;
+    if (index < 0) index = 0;
+
+    updateView();
+    setTimeout(() => isMoving = false, 600);
+}
+
+/* SWIPE MÓVIL */
+let startX = 0;
 
 window.addEventListener("touchstart", e => {
-    startY = e.touches[0].clientY;
+    startX = e.touches[0].clientX;
 });
 
 window.addEventListener("touchend", e => {
-    let endY = e.changedTouches[0].clientY;
-    let diff = startY - endY;
+    let endX = e.changedTouches[0].clientX;
+    let diff = startX - endX;
 
     if (Math.abs(diff) > 50) {
-        if (diff > 0) index++;
-        else index--;
-
-        if (index < 0) index = 0;
-        if (index > sections.length - 1) index = sections.length - 1;
-
-        updateView();
+        if (diff > 0) next();
+        else prev();
     }
 });
 </script>
