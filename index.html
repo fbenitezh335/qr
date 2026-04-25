@@ -8,131 +8,118 @@
 body {
     margin: 0;
     overflow: hidden;
-    font-family: Arial;
 }
 
-.slider {
-    display: flex;
-    width: 400%;
+/* CONTENEDOR PRINCIPAL */
+.container {
     height: 100vh;
-    transition: transform 0.5s ease;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
 }
 
-.slide {
-    width: 100%;
+/* CADA PANTALLA */
+.section {
     height: 100vh;
+    scroll-snap-align: start;
     position: relative;
 }
 
-.slide img {
+/* IMÁGENES */
+.section img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-/* Texto */
+/* TEXTO */
 .title {
     position: absolute;
-    bottom: 100px;
+    bottom: 80px;
     left: 20px;
     color: white;
     font-size: 28px;
-    font-weight: bold;
 }
 
-/* Botón */
+/* BOTÓN */
 .btn {
     position: absolute;
-    bottom: 40px;
+    bottom: 30px;
     left: 20px;
     background: rgba(0,0,0,0.6);
+    padding: 10px 20px;
     color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
     text-decoration: none;
 }
 
-/* Flechas */
+/* FLECHAS */
 .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    position: fixed;
+    right: 20px;
     font-size: 30px;
     color: white;
     background: rgba(0,0,0,0.5);
     padding: 10px;
     cursor: pointer;
+    z-index: 10;
 }
 
-.left { left: 10px; }
-.right { right: 10px; }
-
-/* Indicador inicial */
-.hint {
-    position: absolute;
-    bottom: 120px;
-    width: 100%;
-    text-align: center;
-    color: white;
-    font-size: 14px;
-    animation: fade 2s infinite;
-}
-
-@keyframes fade {
-    0% {opacity: 0;}
-    50% {opacity: 1;}
-    100% {opacity: 0;}
-}
+.up { top: 40%; }
+.down { top: 55%; }
 </style>
 </head>
 
 <body>
 
-<div class="slider" id="slider">
+<div class="container" id="container">
 
-    <!-- SLIDE 1 -->
-    <div class="slide">
+    <div class="section">
         <img src="inicio.jpg">
-        <div class="hint">← Desliza →</div>
     </div>
 
-    <!-- MECÁNICA -->
-    <div class="slide">
+    <div class="section">
         <img src="mecanica.jpg">
         <div class="title">Mecánica Naval</div>
-        <a href="#" class="btn">Ver trabajos</a>
     </div>
 
-    <!-- SOLDADURA -->
-    <div class="slide">
+    <div class="section">
         <img src="soldadura.jpg">
         <div class="title">Soldadura y Calderería</div>
-        <a href="#" class="btn">Ver trabajos</a>
     </div>
 
-    <!-- HIDRÁULICA -->
-    <div class="slide">
+    <div class="section">
         <img src="hidraulica.jpg">
-        <div class="title">Sistemas Hidráulicos</div>
-        <a href="#" class="btn">Ver trabajos</a>
+        <div class="title">Hidráulica</div>
+    </div>
+
+    <div class="section">
+        <img src="tuberias.jpg">
+        <div class="title">Tuberías</div>
     </div>
 
 </div>
 
-<div class="arrow left" onclick="move(-1)">❮</div>
-<div class="arrow right" onclick="move(1)">❯</div>
+<div class="arrow up" onclick="scrollUp()">▲</div>
+<div class="arrow down" onclick="scrollDown()">▼</div>
 
 <script>
+const container = document.getElementById("container");
 let index = 0;
 
-function move(direction) {
-    const slider = document.getElementById("slider");
-    index += direction;
+function scrollDown() {
+    index++;
+    container.scrollTo({
+        top: index * window.innerHeight,
+        behavior: "smooth"
+    });
+}
 
+function scrollUp() {
+    index--;
     if(index < 0) index = 0;
-    if(index > 3) index = 3;
-
-    slider.style.transform = "translateX(-" + (index * 100) + "%)";
+    container.scrollTo({
+        top: index * window.innerHeight,
+        behavior: "smooth"
+    });
 }
 </script>
 
