@@ -22,33 +22,43 @@ body {
     object-fit: cover;
 }
 
-/* FLECHAS */
+/* TEXTO NAVEGA */
+.hint {
+    position: absolute;
+    bottom: 60px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    animation: fade 2s infinite;
+}
+
+/* FLECHA FINA */
+.arrow-line {
+    display: inline-block;
+    margin-left: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    padding: 5px;
+    transform: rotate(-45deg);
+}
+
+/* ANIMACIÓN SUAVE */
+@keyframes fade {
+    0% {opacity: 0.3;}
+    50% {opacity: 1;}
+    100% {opacity: 0.3;}
+}
+
+/* BOTÓN FLECHA */
 .arrow {
     position: absolute;
     top: 50%;
+    right: 10px;
     font-size: 30px;
     color: white;
     background: rgba(0,0,0,0.5);
     padding: 10px;
-}
-
-.left { left: 10px; }
-.right { right: 10px; }
-
-/* TEXTO */
-.hint {
-    position: absolute;
-    bottom: 40px;
-    width: 100%;
-    text-align: center;
-    color: white;
-    animation: blink 1.5s infinite;
-}
-
-@keyframes blink {
-    0% {opacity: 0;}
-    50% {opacity: 1;}
-    100% {opacity: 0;}
 }
 </style>
 </head>
@@ -58,9 +68,11 @@ body {
 <div class="screen">
     <img src="inicio.jpg">
 
-    <div class="hint">Desliza →</div>
+    <div class="hint">
+        Navega <span class="arrow-line"></span>
+    </div>
 
-    <div class="arrow right" onclick="goNext()">❯</div>
+    <div class="arrow" onclick="goNext()">❯</div>
 </div>
 
 <script>
@@ -68,7 +80,6 @@ function goNext() {
     window.location.href = "mecanica.html";
 }
 
-/* SWIPE */
 let startX = 0;
 
 window.addEventListener("touchstart", e => {
@@ -77,9 +88,7 @@ window.addEventListener("touchstart", e => {
 
 window.addEventListener("touchend", e => {
     let endX = e.changedTouches[0].clientX;
-    let diff = startX - endX;
-
-    if(diff > 50) goNext();
+    if(startX - endX > 50) goNext();
 });
 </script>
 
