@@ -22,6 +22,17 @@ body {
     object-fit: cover;
 }
 
+/* TÍTULO ARRIBA */
+.title {
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
 /* FLECHAS */
 .arrow {
     position: absolute;
@@ -35,25 +46,26 @@ body {
 .left { left: 10px; }
 .right { right: 10px; }
 
-/* INDICACIONES */
+/* INDICACIÓN BAJAR */
 .hint-down {
     position: absolute;
-    bottom: 40px;
+    bottom: 100px; /* MÁS ARRIBA */
     width: 100%;
     text-align: center;
     color: white;
-    animation: blink 1.5s infinite;
+    font-size: 16px;
+    animation: fade 2s infinite;
+}
+
+@keyframes fade {
+    0% {opacity: 0.3;}
+    50% {opacity: 1;}
+    100% {opacity: 0.3;}
 }
 
 /* CONTENIDO */
 .content {
     padding: 20px;
-}
-
-@keyframes blink {
-    0% {opacity: 0;}
-    50% {opacity: 1;}
-    100% {opacity: 0;}
 }
 </style>
 </head>
@@ -63,6 +75,8 @@ body {
 <div class="hero">
     <img src="hidraulica.jpg">
 
+    <div class="title">HIDRAULICA</div>
+
     <div class="arrow left" onclick="goPrev()">❮</div>
     <div class="arrow right" onclick="goNext()">❯</div>
 
@@ -70,13 +84,13 @@ body {
 </div>
 
 <div class="content">
-    <h2>TRABAJOS DE HIDRAULICA</h2>
-    <p>Aquí metes contenido real (fotos, etc)</p>
+    <h2>Trabajos de Hidráulica</h2>
+    <p>Aquí puedes añadir fotos y trabajos reales.</p>
 </div>
 
 <script>
 function goPrev() {
-    window.location.href = "index.html";
+    window.location.href = "soldadura.html";
 }
 
 function goNext() {
@@ -92,10 +106,9 @@ window.addEventListener("touchstart", e => {
 
 window.addEventListener("touchend", e => {
     let endX = e.changedTouches[0].clientX;
-    let diff = startX - endX;
 
-    if(diff > 50) goNext();
-    if(diff < -50) goPrev();
+    if(startX - endX > 50) goNext();
+    if(startX - endX < -50) goPrev();
 });
 </script>
 
